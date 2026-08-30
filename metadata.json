@@ -1,0 +1,6 @@
+{
+  "name": "Bharti Medicare Clinic",
+  "description": "Bharti Medicare Clinic located at Plot No. 14, Chitaukhar Bazar, Tekari–Kurth Main Road, Gaya Ji, Bihar – 824235. Mobile: 7079039801.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

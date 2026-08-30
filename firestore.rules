@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId);
+    }
+
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      allow read: if true; // Allows viewing or querying appointments (or user specific in client)
+      allow create: if true; // Both signed-in users and guests can book
+      allow update, delete: if true; // Flexible for user management and demo
+    }
+
+    // Medicines collection - public read, signed in or public create/update/delete for items
+    match /medicines/{medicineId} {
+      allow read: if true;
+      allow create: if isAuthenticated() || true;
+      allow update, delete: if isAuthenticated() || true;
+    }
+
+    // Default rule
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
